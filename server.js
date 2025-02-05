@@ -18,7 +18,7 @@ app.use(express.json());
 app.use("/api/users", require("./Routes/userRoute.js"));
 app.use("/api/todo", require("./Routes/todoRoute.js"));
 
-const PORT = process.env.PORT 
+const PORT = process.env.PORT || 8080; 
 
 app.all("*", (req, res) => {
     res
