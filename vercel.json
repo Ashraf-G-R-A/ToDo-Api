@@ -11,10 +11,6 @@
       {
         "src": "/(.*)",
         "dest": "/server.js"
-      },
-      {
-        "src": "/routes/(.*)",
-        "dest": "/server.js"
       }
     ]
   }
