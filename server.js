@@ -13,10 +13,9 @@ connectDB();
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
-// app.use(verifyToken);
 
 app.use("/api/users", require("./Routes/userRoute.js"));
-app.use("/api/todo", require("./Routes/todoRoute.js"));
+app.use("/api/todo", verifyToken,require("./Routes/todoRoute.js"));
 
 const PORT = process.env.PORT || 8080; 
 

@@ -112,12 +112,7 @@ const loginUser = async (req, res, next) => {
 
     user.token = token;
     await user.save();
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 3600000,
-    });
+    res.setHeader("Authorization", `Bearer ${token}`);
 
     res.status(200).json({
       status: "success",
@@ -146,21 +141,17 @@ const updateUser = async (req, res, next) => {
     }
 
     if (id !== userId) {
-      return res
-        .status(403)
-        .json({
-          status: "error",
-          message: "You can only update your own account.",
-        });
+      return res.status(403).json({
+        status: "error",
+        message: "You can only update your own account.",
+      });
     }
 
     if (req.body.token) {
-      return res
-        .status(400)
-        .json({
-          status: "error",
-          message: "Token cannot be manually updated.",
-        });
+      return res.status(400).json({
+        status: "error",
+        message: "Token cannot be manually updated.",
+      });
     }
 
     const updatedUser = await User.findByIdAndUpdate(id, req.body, {
@@ -201,12 +192,10 @@ const deleteUser = async (req, res, next) => {
     }
 
     if (id !== userId) {
-      return res
-        .status(403)
-        .json({
-          status: "error",
-          message: "You can only delete your own account.",
-        });
+      return res.status(403).json({
+        status: "error",
+        message: "You can only delete your own account.",
+      });
     }
 
     const deletedUser = await User.findByIdAndDelete(id);
